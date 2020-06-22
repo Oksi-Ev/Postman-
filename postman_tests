@@ -1,0 +1,52 @@
+1. Check email availability:
+
+var payload = pm.response.json();
+var token = payload.accessToken;
+
+pm.test("Test that available is true",function(){
+pm.expect(payload.available).to.eql(true);
+});
+
+pm.test("Should partially include object ", function () {
+    var jsonData = pm.response.json();
+    var schema = {
+    "type": "object",
+    "properties": {
+        "available": {"value": "Boolean"},
+    }
+};
+    pm.response.to.have.jsonSchema(schema);
+});
+
+pm.test("Should be true or false: ", function () {
+    var jsonData = pm.response.json();
+    pm.expect(payload.available).to.be.oneOf([true, false]);
+});
+
+2. Check Creating new poll
+
+var payload = pm.response.json();
+var token = payload.accessToken;
+pm.test("Test that Status code is 201", function () {
+pm.response.to.have.status(201);
+});
+
+3.Deleting all polls without permissions:
+
+pm.test("Test that Status code is 403", function () {
+pm.response.to.have.status(403);
+});
+
+4. GET all polls by params:
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+5. Sign in user:
+
+var payload = pm.response.json();
+var token = payload.accessToken;
+
+pm.environment.set("accessToken", token);
+
